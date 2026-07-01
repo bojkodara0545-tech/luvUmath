@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>luvUmath</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #fdf6f3;
+      color: #2d1f2b;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .header {
+      padding: 18px 0;
+      background: rgba(255, 245, 242, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid #fce1da;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .logo {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #d4738a, #b3546b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo .heart {
+      -webkit-text-fill-color: #d4738a;
+      background: none;
+    }
+    .logo span {
+      background: #fadbd2;
+      padding: 0 16px;
+      border-radius: 40px;
+      font-size: 16px;
+      -webkit-text-fill-color: #4d2a33;
+      margin-left: 6px;
+      font-weight: 600;
+    }
+    .nav {
+      display: flex;
+      gap: 26px;
+      font-weight: 500;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #3f2a34;
+      transition: 0.2s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      font-size: 16px;
+    }
+    .nav a:hover {
+      border-bottom-color: #d4738a;
+      color: #b3546b;
+    }
+    .btn {
+      background: #d4738a;
+      color: #fff;
+      padding: 12px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.25s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(212, 115, 138, 0.25);
+    }
+    .btn:hover {
+      background: #b85e74;
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(212, 115, 138, 0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #d4738a;
+      color: #b3546b;
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: #d4738a;
+      color: #fff;
+    }
+    .hero {
+      padding: 60px 0 50px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+    }
+    .hero-text {
+      flex: 1 1 50%;
+    }
+    .hero-text .badge {
+      background: #fce1da;
+      color: #854f5e;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 6px 20px;
+      border-radius: 60px;
+      display: inline-block;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+    .hero-text .badge .stars {
+      color: #d4738a;
+      font-size: 12px;
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .hero-text h1 i {
+      font-style: normal;
+      background: linear-gradient(135deg, #d4738a, #b3546b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-text p {
+      font-size: 19px;
+      color: #4d3a44;
+      max-width: 480px;
+      margin-bottom: 24px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin: 20px 0 30px;
+    }
+    .stat-item {
+      font-size: 15px;
+      font-weight: 500;
+      color: #4d3a44;
+    }
+    .stat-item strong {
+      display: block;
+      font-size: 34px;
+      font-weight: 800;
+      color: #b3546b;
+    }
+    .hero-image {
+      flex: 1 1 40%;
+      text-align: center;
+    }
+
+    /* ——— НЕРОВНЫЕ ОВАЛЫ (КАПЛИ) ——— */
+    .drop-frame {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+      background-size: cover;
+      background-position: center;
+      border: 4px solid #d4738a;
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 30 C320 30 420 80 440 180 C460 280 430 380 370 430 C310 480 180 490 120 430 C60 370 30 280 50 170 C70 60 180 30 250 30Z" fill="black"/></svg>');
+      -webkit-mask-size: cover;
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 30 C320 30 420 80 440 180 C460 280 430 380 370 430 C310 480 180 490 120 430 C60 370 30 280 50 170 C70 60 180 30 250 30Z" fill="black"/></svg>');
+      mask-size: cover;
+    }
+
+    .section {
+      padding: 70px 0;
+      border-top: 2px solid #f7e3dd;
+    }
+    .section-title {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #2d1f2b;
+    }
+    .section-title span {
+      background: #f0c4b8;
+      color: #4d2a33;
+      padding: 0 14px;
+      border-radius: 40px;
+      display: inline-block;
+      font-size: 28px;
+      margin-left: 6px;
+    }
+    .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+    }
+    .about-text {
+      flex: 1 1 55%;
+    }
+    .about-text p {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: #3f2e3a;
+    }
+    .about-text .highlight {
+      background: #fadbd2;
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #854f5e;
+    }
+    .about-drop {
+      flex: 1 1 35%;
+      min-height: 500px;
+      background-size: cover;
+      background-position: center;
+      border: 4px solid #d4738a;
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 20 C340 20 460 90 470 210 C480 330 430 420 350 460 C270 500 140 480 80 410 C20 340 10 200 80 100 C150 0 160 20 250 20Z" fill="black"/></svg>');
+      -webkit-mask-size: cover;
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 20 C340 20 460 90 470 210 C480 330 430 420 350 460 C270 500 140 480 80 410 C20 340 10 200 80 100 C150 0 160 20 250 20Z" fill="black"/></svg>');
+      mask-size: cover;
+    }
+    .case-block {
+      background: #2d1f2b;
+      color: #f5ece8;
+      border-radius: 40px;
+      padding: 48px 40px;
+      margin-top: 16px;
+      border: 2px solid #d4738a;
+      position: relative;
+    }
+    .case-block .stars-bg {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      font-size: 40px;
+      color: #d4738a;
+      opacity: 0.2;
+      line-height: 1;
+    }
+    .case-block h3 {
+      font-size: 30px;
+      font-weight: 700;
+    }
+    .case-block h3 em {
+      font-style: normal;
+      color: #f0b8a8;
+    }
+    .case-block p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 16px 0 24px;
+      opacity: 0.92;
+    }
+    .case-block .result {
+      font-size: 48px;
+      font-weight: 800;
+      color: #f0b8a8;
+    }
+    .case-block .result small {
+      font-size: 22px;
+      font-weight: 400;
+      color: #bfa6a0;
+      margin-left: 8px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      margin-top: 28px;
+    }
+    .service-card {
+      background: #fffaf8;
+      padding: 32px 22px;
+      border-radius: 30px;
+      border: 2px solid #f7e3dd;
+      transition: 0.25s;
+      position: relative;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: #d4738a;
+      box-shadow: 0 16px 30px rgba(212, 115, 138, 0.1);
+    }
+    .service-card .emoji {
+      font-size: 34px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .service-card .stars-row {
+      color: #d4738a;
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-top: 8px;
+      opacity: 0.6;
+    }
+    .service-card h4 {
+      font-size: 22px;
+      margin-bottom: 6px;
+      color: #2d1f2b;
+    }
+    .service-card p {
+      color: #5f4a56;
+      font-size: 16px;
+    }
+    .contacts-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 20px;
+      align-items: stretch;
+    }
+    .contacts-info {
+      flex: 1 1 40%;
+    }
+    .contacts-info p {
+      font-size: 18px;
+      margin: 12px 0;
+      color: #3f2e3a;
+    }
+    .contacts-info .socials {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .contacts-info .socials a {
+      background: #2d1f2b;
+      color: #fdf6f3;
+      padding: 14px 24px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+      text-align: center;
+      font-size: 17px;
+      border: 2px solid transparent;
+    }
+    .contacts-info .socials a:hover {
+      background: #d4738a;
+      border-color: #b3546b;
+      transform: scale(1.02);
+    }
+    .contacts-info .socials a .icon {
+      margin-right: 8px;
+    }
+    .contacts-drop {
+      flex: 1 1 35%;
+      min-height: 500px;
+      background-size: cover;
+      background-position: center;
+      border: 4px solid #d4738a;
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 40 C320 10 450 70 470 180 C490 290 440 400 350 440 C260 480 130 470 80 400 C30 330 10 190 60 100 C110 10 180 70 250 40Z" fill="black"/></svg>');
+      -webkit-mask-size: cover;
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 40 C320 10 450 70 470 180 C490 290 440 400 350 440 C260 480 130 470 80 400 C30 330 10 190 60 100 C110 10 180 70 250 40Z" fill="black"/></svg>');
+      mask-size: cover;
+    }
+    .contacts-form {
+      flex: 1 1 45%;
+      background: #fffaf8;
+      padding: 32px;
+      border-radius: 40px;
+      border: 2px solid #f7e3dd;
+    }
+    .contacts-form input {
+      width: 100%;
+      padding: 16px 18px;
+      border: 2px solid #f0d4cc;
+      border-radius: 60px;
+      font-size: 16px;
+      margin-bottom: 14px;
+      background: #fdf6f3;
+    }
+    .contacts-form input:focus {
+      outline: 2px solid #d4738a;
+      border-color: transparent;
+    }
+    .contacts-form .btn {
+      width: 100%;
+      text-align: center;
+    }
+    .footer {
+      text-align: center;
+      padding: 40px 0 28px;
+      border-top: 2px solid #f7e3dd;
+      color: #6f5263;
+      font-size: 15px;
+      margin-top: 20px;
+    }
+    .footer .ip-badge {
+      display: inline-block;
+      background: #f0c4b8;
+      padding: 10px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      color: #4d2a33;
+      margin-bottom: 14px;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+    .footer .ip-badge .heart {
+      color: #d4738a;
+    }
+    .footer .ip-badge small {
+      font-weight: 400;
+      font-size: 14px;
+      opacity: 0.8;
+      display: block;
+      margin-top: 4px;
+    }
+    .footer .stars-line {
+      font-size: 18px;
+      color: #d4738a;
+      letter-spacing: 6px;
+      opacity: 0.3;
+      margin: 10px 0;
+    }
+    .footer .coop {
+      background: #fdf6f3;
+      padding: 12px 24px;
+      border-radius: 60px;
+      display: inline-block;
+      border: 2px solid #f0c4b8;
+      font-weight: 500;
+      color: #4d2a33;
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .footer .coop span {
+      color: #b3546b;
+      font-weight: 700;
+    }
+    .stars-deco {
+      color: #d4738a;
+      font-size: 13px;
+      letter-spacing: 5px;
+      opacity: 0.5;
+    }
+    @media (max-width: 700px) {
+      .hero-text h1 {
+        font-size: 34px;
+      }
+      .hero-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .drop-frame {
+        width: 300px;
+        height: 300px;
+      }
+      .about-drop {
+        min-height: 300px;
+      }
+      .contacts-drop {
+        min-height: 300px;
+      }
+      .case-block {
+        padding: 28px 20px;
+      }
+      .case-block .result {
+        font-size: 36px;
+      }
+      .nav {
+        gap: 16px;
+      }
+      .header-inner {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">luvUmath <span class="heart">♥</span> <span>Даша</span></div>
+    <nav class="nav">
+      <a href="#about">Обо мне</a>
+      <a href="#case">Кейс</a>
+      <a href="#services">Услуги</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="#contacts" class="btn">Записаться ✦</a>
+  </div>
+</header>
+<section class="hero container">
+  <div class="hero-text">
+    <div class="badge"><span class="stars">✦ ✦ ✦</span> на одной волне с подростками <span class="stars">✦ ✦ ✦</span></div>
+    <h1>Профильная математика<br />с <i>харизмой</i> и результатом</h1>
+    <p>Я — Даша, репетитор <strong>luvUmath</strong> ♥<br />За 1 год сделала из «ненавижу математику» → 72 балла ЕГЭ. Никаких слёз, только шутки про Ященко.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><strong>1 год</strong> стаж</div>
+      <div class="stat-item"><strong>1/1</strong> ученик — поступление</div>
+      <div class="stat-item"><strong>72</strong> балла ЕГЭ</div>
+    </div>
+    <a href="#contacts" class="btn">Хочу так же ♥</a>
+  </div>
+  <div class="hero-image">
+    <div class="drop-frame" style="background-image: url('https://sun9-32.userapi.com/s/v1/ig2/iCc9UTIDIRxgOZ2Nz4YpGL1zr16MbQsfmyJJjU_qlwpiEtxmrrG10MOMMpQQDGhc5WCU5gvqPFl2eAErX4oUvXOj.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&from=bu&u=bsknjriBSewbztdT7vIhzsB0juQpZI1x-jGixpIkLBE&cs=1280x0');"></div>
+    <p style="margin-top: 14px; color: #6f5263; font-size: 15px;"><span class="stars-deco">✦ ✦ ✦</span> математика без слёз <span class="stars-deco">✦ ✦ ✦</span></p>
+  </div>
+</section>
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-title">Обо мне <span>♥</span></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Меня зовут <strong>Даша</strong>, мне 19 лет, и я преподаю профильную математику так, как хотела бы, чтобы преподавали мне.</p>
+        <p>Я <span class="highlight">на одной волне</span> со старшеклассниками: понимаю мемы, слушаю ту же музыку и знаю, как превратить «это вообще зачем?» в «ого, круто!».</p>
+        <p>Мой секрет — <strong>комплексный подход</strong> + чувство юмора. Мы не зубрим, а разбираемся, смеёмся над ошибками и кайфуем от прогресса.</p>
+        <p class="stars-deco" style="margin-top: 12px;">✦ ✦ ✦ ✦ ✦</p>
+      </div>
+      <div class="about-drop" style="background-image: url('https://sun9-44.userapi.com/s/v1/ig2/lMuVuprprzgONbfSgp8w7b23PV56Rv1BTHhR_1S4oa0gs0ozkBT96b78TaO-6PkbTiZYUppAVaPGA39IJ0dmzdxT.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&from=bu&u=237Icqktge2xfibnJfxmwgH2KKB1ywUxxsFDNPT_yI8&cs=1280x0');"></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="case">
+  <div class="container">
+    <div class="case-block">
+      <div class="stars-bg">✦ ✦ ✦</div>
+      <h3>Кейс <em>Серёжи</em> — от ненависти к 72 баллам</h3>
+      <p>Серёжа пришёл ко мне в сентябре с убеждением, что математика — это боль. Он не понимал базу, боялся производных и считал, что «это не его». Мы начали с шуток про графики, разбирали задачи через жизненные примеры, и уже через 4 месяца он решал 1-ю часть на 12/12.</p>
+      <p><strong>Результат:</strong> ЕГЭ по профилю — сдан, поступление в вуз мечты. А главное — Серёжа больше не боится логарифмов.</p>
+      <div class="result">72 <small>балла</small></div>
+      <a href="#contacts" style="display: inline-block; margin-top: 24px;" class="btn btn-outline">Хочу свой кейс ♥</a>
+    </div>
+  </div>
+</section>
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-title">Что я предлагаю <span>✦</span></div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="emoji">🎯</span>
+        <h4>Диагностика</h4>
+        <p>Поймём, где пробелы, и составим план. Без воды.</p>
+        <div class="stars-row">✦ ✦ ✦</div>
+      </div>
+      <div class="service-card">
+        <span class="emoji">🔥</span>
+        <h4>Интенсив</h4>
+        <p>2–3 раза в неделю. Всё по делу, с домашкой на закрепление.</p>
+        <div class="stars-row">✦ ✦ ✦</div>
+      </div>
+      <div class="service-card">
+        <span class="emoji">🧘</span>
+        <h4>Психологическая поддержка</h4>
+        <p>Снижаем тревогу перед ЕГЭ и повышаем уверенность.</p>
+        <div class="stars-row">✦ ✦ ✦</div>
+      </div>
+      <div class="service-card">
+        <span class="emoji">📈</span>
+        <h4>Разбор 2-й части</h4>
+        <p>Параметры, стереометрия, экономика — на пальцах и с юмором.</p>
+        <div class="stars-row">✦ ✦ ✦</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="contacts">
+  <div class="container">
+    <div class="section-title">Связаться <span>💬</span></div>
+    <div class="contacts-wrap">
+      <div class="contacts-info">
+        <p><strong>ДАРЬЯ ДЕНИСОВНА</strong> — репетитор <strong>luvUmath</strong> ♥</p>
+        <p style="font-size: 15px; color: #6f5263;"><span class="stars-deco">✦</span> отвечаю быстро и без официальщины <span class="stars-deco">✦</span></p>
+        <div class="socials">
+          <a href="#" target="_blank"><span class="icon">📱</span> Telegram — @neferra_a</a>
+          <a href="#" target="_blank"><span class="icon">🌐</span> ВКонтакте — https://vk.com/fluff_u_u</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">✦ по всем вопросам пиши в соцсети ✦</p>
+      </div>
+      <div class="contacts-drop" style="background-image: url('https://sun9-29.userapi.com/s/v1/ig2/rbXn35EjtK7L7kwH41mjpc0LIHQtnlVSbhtOd_7G1xB9_V_VxOKj4YdS_IpvMQmEvwx-cYYt41xwA6cuNN04_mIr.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&from=bu&u=SXp5Tw5_FTPPU3-5hc2_XCJXfEQpoNjll21CvV_PiTc&cs=1280x0');"></div>
+      <div class="contacts-form">
+        <form>
+          <input type="text" placeholder="Ваше имя" required />
+          <input type="tel" placeholder="Телефон или Telegram" required />
+          <input type="text" placeholder="Класс / уровень (например, 11 класс, базовый)" />
+          <button type="submit" class="btn">Отправить заявку</button>
+        </form>
+        <p style="font-size: 14px; margin-top: 12px; color: #6f5263; text-align: center;"><span class="stars-deco">✦</span> пришлю пробный урок по приятной цене <span class="stars-deco">✦</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer container">
+  <div class="ip-badge">ИП «luvUmath» <span class="heart">♥</span> <small>индивидуальный предприниматель</small></div>
+  <div class="stars-line">✦ ✦ ✦ ✦ ✦ ✦</div>
+  <div class="coop">🤝 готова к сотрудничеству с <span>организациями</span> и учебными центрами</div>
+  <p style="margin-top: 24px; font-size: 14px;">© 2026 ДАРЬЯ ДЕНИСОВНА · luvUmath ♥<br /><span style="font-size: 13px; opacity: 0.7;">сделано с любовью к числам и звёздочкам ✦</span></p>
+  <p style="margin-top: 8px; font-size: 13px; opacity: 0.5;">«даже если сейчас кажется, что это не твоё — мы это исправим»</p>
+</footer>
+</body>
+</html>
